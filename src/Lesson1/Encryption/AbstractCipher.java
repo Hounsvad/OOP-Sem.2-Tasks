@@ -9,11 +9,11 @@ package Lesson1.Encryption;
  *
  * @author Hounsvad
  */
-public abstract class AbstractCipher implements CipherInterface{
-    
-    public int findCharIndex(char ch){
-        for(int i = 0; i < ALPHABETH.length; i++){
-            if(ch == ALPHABETH[i]){
+public abstract class AbstractCipher implements CipherInterface {
+
+    public int findCharIndex(char ch) {
+        for (int i = 0; i < ALPHABETH.length; i++) {
+            if (ch == ALPHABETH[i]) {
                 System.out.println(i);
                 return i;
             }

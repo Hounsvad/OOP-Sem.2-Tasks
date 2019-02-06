@@ -50,7 +50,7 @@
                                 <Label layoutX="11.0" layoutY="14.0" prefHeight="17.0" prefWidth="136.0" text="Cipher type" />
                                 <Spinner fx:id="Spinner_RotCount" editable="true" layoutX="319.0" layoutY="19.0" prefHeight="33.0" prefWidth="54.0" />
                                 <Button fx:id="Button_Save" layoutX="385.0" layoutY="19.0" mnemonicParsing="false" onAction="#saveToFile" prefHeight="33.0" prefWidth="80.0" text="Save to File" />
-                        <Button fx:id="Button_Decode" defaultButton="true" layoutX="165.0" layoutY="43.0" mnemonicParsing="false" onAction="#Decode" prefHeight="16.0" prefWidth="115.0" text="Decode" />
+                                <Button fx:id="Button_Decode" defaultButton="true" layoutX="165.0" layoutY="43.0" mnemonicParsing="false" onAction="#Decode" prefHeight="16.0" prefWidth="115.0" text="Decode" />
                             </children>
                         </AnchorPane>
                     </content>

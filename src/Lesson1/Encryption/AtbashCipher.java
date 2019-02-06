@@ -9,15 +9,15 @@ package Lesson1.Encryption;
  *
  * @author Hounsvad
  */
-public class AtbashCipher extends AbstractCipher{
+public class AtbashCipher extends AbstractCipher {
 
     @Override
     public String encrypt(String original) {
         StringBuilder sb = new StringBuilder();
         char[] chArr = original.toCharArray();
-        for(char c : chArr){
+        for (char c : chArr) {
             int index = findCharIndex(c);
-            sb.append((index == -1 ? c :ALPHABETH[ALPHABETH.length-index-1]));
+            sb.append((index == -1 ? c : ALPHABETH[ALPHABETH.length - index - 1]));
         }
         return sb.toString();
     }
@@ -26,5 +26,5 @@ public class AtbashCipher extends AbstractCipher{
     public String decrypt(String encrypted) {
         return encrypt(encrypted);
     }
-    
+
 }

@@ -5,7 +5,6 @@ package Lesson1;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,13 +16,13 @@ import javafx.stage.Stage;
  * @author Hounsvad
  */
 public class Lesson1 extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
-        
+
         Scene scene = new Scene(root);
-        
+
         stage.setScene(scene);
         stage.show();
     }
@@ -50,5 +49,5 @@ public class Lesson1 extends Application {
 //        System.out.println("Ceasar 13: \n" + enc);
 //        System.out.println(cipher.decrypt(enc));
     }
-    
+
 }

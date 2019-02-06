@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package opg4_polymorphism;
+package Lesson1.Shape;
 
 /**
  *
@@ -11,28 +11,42 @@ package opg4_polymorphism;
  */
 public class ShapeFacade {
 
-    //Singleton Stufff:
+    //Singleton Stuff:
     private static ShapeFacade instance = null;
-
+    
     public static ShapeFacade getInstance() {
         if (instance == null) {
             instance = new ShapeFacade();
         }
         return instance;
     }
-
+    
     private ShapeFacade() {
     }
     //---------------------------
 
     // enum som kendes af GUI'en
     public enum SHAPES {
-        CIRCLE, ELLIPSE, RECTANGLE, SQUERE
+        CIRCLE,
+        ELLIPSE,
+        RECTANGLE,
+        SQUARE
     };
 
     // Facadens public metoder
     public String getShapeInfo(SHAPES shape, double... parametre) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        switch (shape) {
+            case CIRCLE:
+                return new Circle(parametre[0]).toString();
+            case ELLIPSE:
+                return new Ellipse(parametre[0], parametre[1]).toString();
+            case RECTANGLE:
+                return new Rectangle(parametre[0], parametre[1]).toString();
+            case SQUARE:
+                return new Square(parametre[0]).toString();
+            default:
+                throw new AssertionError();
+        }
     }
-
+    
 }

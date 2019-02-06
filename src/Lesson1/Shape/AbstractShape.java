@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package opg4_polymorphism;
-
+package Lesson1.Shape;
 
 /**
  *
  * @author erso
  */
-public abstract class AbstractShape implements ShapeInterface{
+public abstract class AbstractShape implements ShapeInterface {
 
     @Override
     public String toString() {
-        String result = String.format("\nJeg er en %1s med\nAreal %2$7.3f og\nOmkreds %3$7.3f", 
+        String result = String.format("\nJeg er en %1s med\nAreal %2$7.3f og\nOmkreds %3$7.3f",
                 getClass().getSimpleName(), getArea(), getCircumference());
         return result;
     }

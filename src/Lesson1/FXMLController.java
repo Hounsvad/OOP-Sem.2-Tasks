@@ -60,16 +60,16 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void saveToFile(ActionEvent event) {
-            File f = new File("Output.txt");
-            try(PrintWriter pw = new PrintWriter(f);) {
-                pw.println("(&Input&)");
-                pw.println(TextArea_Input.getText());
-                pw.println("(&Output&)");
-                pw.println(TextArea_Output.getText());
-                pw.close();
-            } catch (FileNotFoundException e) {
-                
-            }
+        File f = new File("Output.txt");
+        try (PrintWriter pw = new PrintWriter(f);) {
+            pw.println("(&Input&)");
+            pw.println(TextArea_Input.getText());
+            pw.println("(&Output&)");
+            pw.println(TextArea_Output.getText());
+            pw.close();
+        } catch (FileNotFoundException e) {
+
+        }
     }
 
     @FXML
