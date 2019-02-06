@@ -8,6 +8,7 @@ package Lesson1;
 import Lesson1.Encryption.CipherInterface;
 import Lesson1.Encryption.AtbashCipher;
 import Lesson1.Encryption.CeasarCipher;
+import Lesson1.Shape.ShapeFacade;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -17,10 +18,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 
@@ -49,6 +52,26 @@ public class FXMLController implements Initializable {
     private Button Button_Decode;
     @FXML
     private Button Button_Encode;
+    @FXML
+    private RadioButton Radio_Ellipse;
+    @FXML
+    private ToggleGroup Shape;
+    @FXML
+    private RadioButton Radio_Rectangle;
+    @FXML
+    private RadioButton Radio_Circle;
+    @FXML
+    private RadioButton Radio_Square;
+    @FXML
+    private TextField TextField_SecondParam;
+    @FXML
+    private Label Label_SecondInput;
+    @FXML
+    private TextField TextField_FirstParam;
+    @FXML
+    private Label Label_FirstInput;
+    @FXML
+    private TextArea TextArea_ShapeOutput;
 
     /**
      * Initializes the controller class.
@@ -56,6 +79,11 @@ public class FXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Spinner_RotCount.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, CipherInterface.ALPHABETH.length - 1, 1));
+        Radio_Ellipse.setUserData(ShapeFacade.SHAPES.ELLIPSE);
+        Radio_Rectangle.setUserData(ShapeFacade.SHAPES.RECTANGLE);
+        Radio_Circle.setUserData(ShapeFacade.SHAPES.CIRCLE);
+        Radio_Square.setUserData(ShapeFacade.SHAPES.SQUARE);
+
     }
 
     @FXML
@@ -73,7 +101,7 @@ public class FXMLController implements Initializable {
     }
 
     @FXML
-    private void Update(MouseEvent event) {
+    private void UpdateEncoder(MouseEvent event) {
         if (Kryptering.getSelectedToggle() == RadioButton_Atbash) {
             Button_Encode.setText("Transcode");
             Button_Decode.disableProperty().set(true);
@@ -97,6 +125,42 @@ public class FXMLController implements Initializable {
         CipherInterface cipher;
         cipher = Kryptering.getSelectedToggle() == RadioButton_Atbash ? new AtbashCipher() : new CeasarCipher(Spinner_RotCount.getValue());
         TextArea_Output.setText(cipher.decrypt(TextArea_Input.getText()));
+    }
+
+    @FXML
+    private void getShapeInfo(ActionEvent event) {
+        ShapeFacade.SHAPES shape = (ShapeFacade.SHAPES) Shape.getSelectedToggle().getUserData();
+        switch (shape) {
+            case SQUARE:
+            case CIRCLE:
+                TextArea_ShapeOutput.setText(ShapeFacade.getInstance().getShapeInfo(shape, new double[]{Double.parseDouble(TextField_FirstParam.getText())}));
+                break;
+            case RECTANGLE:
+            case ELLIPSE:
+                TextArea_ShapeOutput.setText(ShapeFacade.getInstance().getShapeInfo(shape, new double[]{Double.parseDouble(TextField_FirstParam.getText()), Double.parseDouble(TextField_SecondParam.getText())}));
+                break;
+            default:
+                throw new AssertionError();
+        }
+    }
+
+    @FXML
+    private void UpdateShape(ActionEvent event) {
+        ShapeFacade.SHAPES shape = (ShapeFacade.SHAPES) Shape.getSelectedToggle().getUserData();
+        switch (shape) {
+            case SQUARE:
+            case CIRCLE:
+                Label_SecondInput.disableProperty().set(true);
+                TextField_SecondParam.disableProperty().set(true);
+                break;
+            case RECTANGLE:
+            case ELLIPSE:
+                Label_SecondInput.disableProperty().set(false);
+                TextField_SecondParam.disableProperty().set(false);
+                break;
+            default:
+                throw new AssertionError();
+        }
     }
 
 }
