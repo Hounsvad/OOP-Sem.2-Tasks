@@ -5,16 +5,17 @@
  */
 package Lesson1;
 
+import Lesson1.Encryption.CipherInterface;
+import Lesson1.Encryption.AtbashCipher;
+import Lesson1.Encryption.CeasarCipher;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.print.Printer;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
@@ -69,8 +70,6 @@ public class FXMLController implements Initializable {
             } catch (FileNotFoundException e) {
                 
             }
-                
-
     }
 
     @FXML
