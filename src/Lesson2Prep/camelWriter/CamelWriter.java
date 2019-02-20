@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Lesson2Prep;
+package Lesson2Prep.camelWriter;
 
 import java.io.File;
 import java.util.Scanner;
@@ -17,7 +17,7 @@ public class CamelWriter {
     private File inFile;
 
     public CamelWriter(String fName) {
-            inFile = new File(fName);
+            inFile = new File("src\\Lesson2Prep\\camelWriter\\" + fName);
     }
 
     public void readLines() {
