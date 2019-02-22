@@ -1,3 +1,0 @@
-(&Input&)
-Hello
-(&Output&)
