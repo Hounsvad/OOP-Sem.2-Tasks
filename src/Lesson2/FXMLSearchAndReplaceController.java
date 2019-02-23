@@ -6,6 +6,7 @@
 package Lesson2;
 
 import java.net.URL;
+import java.io.File;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,6 +28,9 @@ public class FXMLSearchAndReplaceController implements Initializable {
     private TextField textFieldReplace;
     @FXML
     private TextArea textAreaInput;
+    
+    private File file;
+    
 
     /**
      * Initializes the controller class.
@@ -38,17 +42,24 @@ public class FXMLSearchAndReplaceController implements Initializable {
 
     @FXML
     private void buttonReplace(ActionEvent event) {
+        
     }
 
     @FXML
     private void buttonOpen(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        fileChooser.showOpenDialog(null);
+        file = fileChooser.showOpenDialog(null);
+        if(file.isFile() && file.canRead()){
+            textAreaInput = 
+        }
     }
 
     @FXML
     private void buttonSaveAs(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.showOpenDialog(null);
     }
 
 }
