@@ -93,7 +93,7 @@ public class FXMLSearchAndReplaceController implements Initializable {
     private void buttonOpen(ActionEvent event
     ) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
+        fileChooser.setTitle("Open");
         if (file != null) {
             fileChooser.setInitialDirectory(file.getParentFile());
         }
@@ -115,11 +115,11 @@ public class FXMLSearchAndReplaceController implements Initializable {
     private void buttonSaveAs(ActionEvent event
     ) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
+        fileChooser.setTitle("Save as");
         if (file != null) {
             fileChooser.setInitialDirectory(file.getParentFile());
         }
-        file = fileChooser.showOpenDialog(null);
+        file = fileChooser.showSaveDialog(null);
         if (file != null) {
             try (FileWriter fw = new FileWriter(file, false)) {
                 System.out.println("Saving as");
