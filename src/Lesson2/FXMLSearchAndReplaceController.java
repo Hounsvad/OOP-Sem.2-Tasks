@@ -28,19 +28,19 @@ import javafx.stage.FileChooser;
 public class FXMLSearchAndReplaceController implements Initializable {
 
     @FXML
-    private TextField textFieldSearch;
+    private TextField search;
     @FXML
-    private TextField textFieldReplace;
+    private TextField replace;
     @FXML
-    private TextArea textAreaInput;
+    private TextArea input;
 
     private File file = null;
 
-    private IndexRange selectionIndex = null;
+    private IndexRange selection = null;
 
-    private String toBeReplaced;
+    private String varSearch;
 
-    private String replacement;
+    private String varReplace;
 
     /**
      * Initializes the controller class.
@@ -52,39 +52,39 @@ public class FXMLSearchAndReplaceController implements Initializable {
 
     @FXML
     private void buttonReplace(ActionEvent event) {
-        selectionIndex = textAreaInput.getSelection();
-        toBeReplaced = textFieldSearch.getText();
-        replacement = textFieldReplace.getText();
-        String input = textAreaInput.getText();
+        selection = input.getSelection();
+        varSearch = search.getText();
+        varReplace = replace.getText();
+        String varInput = input.getText();
 
-        if (textAreaInput.getSelectedText().isEmpty()) {
-            textAreaInput.setText(input.replaceFirst(toBeReplaced, replacement));
+        if (input.getSelectedText().isEmpty()) {
+            input.setText(varInput.replaceFirst(varSearch, varReplace));
         } else {
-            textAreaInput.setText(input.substring(0, selectionIndex.getStart())
-                    + textAreaInput.getText(selectionIndex.getStart(), selectionIndex.getEnd()).replaceFirst(toBeReplaced, replacement)
-                    + input.substring(selectionIndex.getEnd())
+            input.setText(varInput.substring(0, selection.getStart())
+                    + input.getText(selection.getStart(), selection.getEnd()).replaceFirst(varSearch, varReplace)
+                    + varInput.substring(selection.getEnd())
             );
-            selectionIndex = new IndexRange(selectionIndex.getStart(), selectionIndex.getEnd() + (replacement.length() - toBeReplaced.length()));
-            textAreaInput.selectRange(selectionIndex.getStart(), selectionIndex.getEnd());
+            selection = new IndexRange(selection.getStart(), selection.getEnd() + (varReplace.length() - varSearch.length()));
+            input.selectRange(selection.getStart(), selection.getEnd());
         }
     }
 
     @FXML
     private void buttonReplaceAll(ActionEvent event) {
-        selectionIndex = textAreaInput.getSelection();
-        toBeReplaced = textFieldSearch.getText();
-        replacement = textFieldReplace.getText();
-        String input = textAreaInput.getText();
+        selection = input.getSelection();
+        varSearch = search.getText();
+        varReplace = replace.getText();
+        String varInput = input.getText();
 
-        if (textAreaInput.getSelectedText().isEmpty()) {
-            textAreaInput.setText(input.replaceFirst(toBeReplaced, replacement));
+        if (input.getSelectedText().isEmpty()) {
+            input.setText(varInput.replaceFirst(varSearch, varReplace));
         } else {
-            textAreaInput.setText(input.substring(0, selectionIndex.getStart())
-                    + textAreaInput.getText(selectionIndex.getStart(), selectionIndex.getEnd()).replaceAll(toBeReplaced, replacement)
-                    + input.substring(selectionIndex.getEnd())
+            input.setText(varInput.substring(0, selection.getStart())
+                    + input.getText(selection.getStart(), selection.getEnd()).replaceAll(varSearch, varReplace)
+                    + varInput.substring(selection.getEnd())
             );
-            selectionIndex = new IndexRange(selectionIndex.getStart(), selectionIndex.getEnd() + (replacement.length() - toBeReplaced.length()));
-            textAreaInput.selectRange(selectionIndex.getStart(), selectionIndex.getEnd() - (input.length() - textAreaInput.getText().length()));
+            selection = new IndexRange(selection.getStart(), selection.getEnd() + (varReplace.length() - varSearch.length()));
+            input.selectRange(selection.getStart(), selection.getEnd() - (varInput.length() - input.getText().length()));
         }
 
     }
@@ -100,9 +100,9 @@ public class FXMLSearchAndReplaceController implements Initializable {
         file = fileChooser.showOpenDialog(null);
         if (file != null && file.isFile() && file.canRead()) {
             try (Scanner fileReader = new Scanner(file)) {
-                textAreaInput.clear();
+                input.clear();
                 while (fileReader.hasNextLine()) {
-                    textAreaInput.appendText(fileReader.nextLine());
+                    input.appendText(fileReader.nextLine());
                 }
             } catch (FileNotFoundException ex) {
                 //ex.printStackTrace();
@@ -123,7 +123,7 @@ public class FXMLSearchAndReplaceController implements Initializable {
         if (file != null) {
             try (FileWriter fw = new FileWriter(file, false)) {
                 System.out.println("Saving as");
-                fw.write(textAreaInput.getText());
+                fw.write(input.getText());
             } catch (IOException ex) {
                 //ex.printStackTrace();
                 System.out.println("Error in save as");
@@ -139,8 +139,8 @@ public class FXMLSearchAndReplaceController implements Initializable {
         } else {
             try (FileWriter fw = new FileWriter(file, false)) {
                 System.out.println("Saving");
-                System.out.println(textAreaInput.getText());
-                fw.write(textAreaInput.getText());
+                System.out.println(input.getText());
+                fw.write(input.getText());
             } catch (IOException ex) {
                 //ex.printStackTrace();
                 System.out.println("Error in save");
@@ -155,20 +155,20 @@ public class FXMLSearchAndReplaceController implements Initializable {
 
     @FXML
     private void buttonSwap(ActionEvent event) {
-        toBeReplaced = textFieldSearch.getText();
-        replacement = textFieldReplace.getText();
-        textFieldSearch.setText(replacement);
-        textFieldReplace.setText(toBeReplaced);
+        varSearch = search.getText();
+        varReplace = replace.getText();
+        search.setText(varReplace);
+        replace.setText(varSearch);
     }
 
     @FXML
     private void butttonClear(ActionEvent event) {
         file = null;
-        selectionIndex = null;
-        toBeReplaced = "";
-        replacement = "";
-        textAreaInput.clear();
-        textFieldReplace.clear();
-        textFieldSearch.clear();
+        selection = null;
+        varSearch = "";
+        varReplace = "";
+        input.clear();
+        replace.clear();
+        search.clear();
     }
 }
