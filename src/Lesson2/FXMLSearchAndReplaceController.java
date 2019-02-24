@@ -56,24 +56,15 @@ public class FXMLSearchAndReplaceController implements Initializable {
         toBeReplaced = textFieldSearch.getText();
         replacement = textFieldReplace.getText();
         String input = textAreaInput.getText();
-        String[] tokens = new String[2];
-        String selection = textAreaInput.getText(selectionIndex.getStart(), selectionIndex.getEnd());
 
-        if (selectionIndex.getLength() < 2) {
+        if (textAreaInput.getSelectedText().isEmpty()) {
             textAreaInput.setText(input.replaceFirst(toBeReplaced, replacement));
         } else {
-            tokens[0] = input.substring(0, selectionIndex.getStart());
-            tokens[1] = input.substring(selectionIndex.getEnd(), input.length() - 1);
-            System.out.println(selectionIndex.getStart() + ":" + selectionIndex.getEnd());
             textAreaInput.setText(input.substring(0, selectionIndex.getStart())
                     + textAreaInput.getText(selectionIndex.getStart(), selectionIndex.getEnd()).replaceFirst(toBeReplaced, replacement)
                     + input.substring(selectionIndex.getEnd())
             );
-            if (toBeReplaced.length() < replacement.length()) {
-                selectionIndex = new IndexRange(selectionIndex.getStart(), selectionIndex.getEnd() + (replacement.length() - toBeReplaced.length()));
-            } else if (toBeReplaced.length() > replacement.length()) {
-                selectionIndex = new IndexRange(selectionIndex.getStart(), selectionIndex.getEnd() - (replacement.length() - toBeReplaced.length()));
-            }
+            selectionIndex = new IndexRange(selectionIndex.getStart(), selectionIndex.getEnd() + (replacement.length() - toBeReplaced.length()));
             textAreaInput.selectRange(selectionIndex.getStart(), selectionIndex.getEnd());
         }
     }
@@ -84,21 +75,23 @@ public class FXMLSearchAndReplaceController implements Initializable {
         toBeReplaced = textFieldSearch.getText();
         replacement = textFieldReplace.getText();
         String input = textAreaInput.getText();
-        String[] tokens = new String[2];
-        String selection = textAreaInput.getText(selectionIndex.getStart(), selectionIndex.getEnd());
 
-        if (selectionIndex.getLength() < 2) {
-            textAreaInput.setText(textAreaInput.getText().replaceAll(toBeReplaced, replacement));
+        if (textAreaInput.getSelectedText().isEmpty()) {
+            textAreaInput.setText(input.replaceFirst(toBeReplaced, replacement));
         } else {
-            tokens[0] = input.substring(0, selectionIndex.getStart());
-            tokens[1] = input.substring(selectionIndex.getEnd(), input.length() - 1);
-            textAreaInput.setText(tokens[0] + textAreaInput.getText(selectionIndex.getStart(), selectionIndex.getEnd()).replaceAll(toBeReplaced, replacement) + tokens[1]);
+            textAreaInput.setText(input.substring(0, selectionIndex.getStart())
+                    + textAreaInput.getText(selectionIndex.getStart(), selectionIndex.getEnd()).replaceAll(toBeReplaced, replacement)
+                    + input.substring(selectionIndex.getEnd())
+            );
+            selectionIndex = new IndexRange(selectionIndex.getStart(), selectionIndex.getEnd() + (replacement.length() - toBeReplaced.length()));
+            textAreaInput.selectRange(selectionIndex.getStart(), selectionIndex.getEnd() - (input.length() - textAreaInput.getText().length()));
         }
-        textAreaInput.selectRange(selectionIndex.getStart(), selectionIndex.getEnd() - (input.length() - textAreaInput.getText().length()));
+
     }
 
     @FXML
-    private void buttonOpen(ActionEvent event) {
+    private void buttonOpen(ActionEvent event
+    ) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         if (file != null) {
@@ -119,7 +112,8 @@ public class FXMLSearchAndReplaceController implements Initializable {
     }
 
     @FXML
-    private void buttonSaveAs(ActionEvent event) {
+    private void buttonSaveAs(ActionEvent event
+    ) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         if (file != null) {
@@ -138,7 +132,8 @@ public class FXMLSearchAndReplaceController implements Initializable {
     }
 
     @FXML
-    private void buttonSave(ActionEvent event) {
+    private void buttonSave(ActionEvent event
+    ) {
         if (file == null) {
             buttonSaveAs(event);
         } else {
@@ -164,5 +159,16 @@ public class FXMLSearchAndReplaceController implements Initializable {
         replacement = textFieldReplace.getText();
         textFieldSearch.setText(replacement);
         textFieldReplace.setText(toBeReplaced);
+    }
+
+    @FXML
+    private void butttonClear(ActionEvent event) {
+        file = null;
+        selectionIndex = null;
+        toBeReplaced = "";
+        replacement = "";
+        textAreaInput.clear();
+        textFieldReplace.clear();
+        textFieldSearch.clear();
     }
 }

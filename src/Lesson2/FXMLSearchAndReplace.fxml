@@ -46,7 +46,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="Clear" />
+              <MenuItem mnemonicParsing="false" onAction="#butttonClear" text="Clear" />
             </items>
           </Menu>
         </menus>
