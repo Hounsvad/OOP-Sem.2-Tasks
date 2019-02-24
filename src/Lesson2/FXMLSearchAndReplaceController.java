@@ -7,10 +7,15 @@ package Lesson2;
 
 import java.net.URL;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.IndexRange;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -28,9 +33,14 @@ public class FXMLSearchAndReplaceController implements Initializable {
     private TextField textFieldReplace;
     @FXML
     private TextArea textAreaInput;
-    
-    private File file;
-    
+
+    private File file = null;
+
+    private IndexRange selectionIndex = null;
+
+    private String toBeReplaced;
+
+    private String replacement;
 
     /**
      * Initializes the controller class.
@@ -42,16 +52,69 @@ public class FXMLSearchAndReplaceController implements Initializable {
 
     @FXML
     private void buttonReplace(ActionEvent event) {
-        
+        selectionIndex = textAreaInput.getSelection();
+        toBeReplaced = textFieldSearch.getText();
+        replacement = textFieldReplace.getText();
+        String input = textAreaInput.getText();
+        String[] tokens = new String[2];
+        String selection = textAreaInput.getText(selectionIndex.getStart(), selectionIndex.getEnd());
+
+        if (selectionIndex.getLength() < 2) {
+            textAreaInput.setText(input.replaceFirst(toBeReplaced, replacement));
+        } else {
+            tokens[0] = input.substring(0, selectionIndex.getStart());
+            tokens[1] = input.substring(selectionIndex.getEnd(), input.length() - 1);
+            System.out.println(selectionIndex.getStart() + ":" + selectionIndex.getEnd());
+            textAreaInput.setText(input.substring(0, selectionIndex.getStart())
+                    + textAreaInput.getText(selectionIndex.getStart(), selectionIndex.getEnd()).replaceFirst(toBeReplaced, replacement)
+                    + input.substring(selectionIndex.getEnd())
+            );
+            if (toBeReplaced.length() < replacement.length()) {
+                selectionIndex = new IndexRange(selectionIndex.getStart(), selectionIndex.getEnd() + (replacement.length() - toBeReplaced.length()));
+            } else if (toBeReplaced.length() > replacement.length()) {
+                selectionIndex = new IndexRange(selectionIndex.getStart(), selectionIndex.getEnd() - (replacement.length() - toBeReplaced.length()));
+            }
+            textAreaInput.selectRange(selectionIndex.getStart(), selectionIndex.getEnd());
+        }
+    }
+
+    @FXML
+    private void buttonReplaceAll(ActionEvent event) {
+        selectionIndex = textAreaInput.getSelection();
+        toBeReplaced = textFieldSearch.getText();
+        replacement = textFieldReplace.getText();
+        String input = textAreaInput.getText();
+        String[] tokens = new String[2];
+        String selection = textAreaInput.getText(selectionIndex.getStart(), selectionIndex.getEnd());
+
+        if (selectionIndex.getLength() < 2) {
+            textAreaInput.setText(textAreaInput.getText().replaceAll(toBeReplaced, replacement));
+        } else {
+            tokens[0] = input.substring(0, selectionIndex.getStart());
+            tokens[1] = input.substring(selectionIndex.getEnd(), input.length() - 1);
+            textAreaInput.setText(tokens[0] + textAreaInput.getText(selectionIndex.getStart(), selectionIndex.getEnd()).replaceAll(toBeReplaced, replacement) + tokens[1]);
+        }
+        textAreaInput.selectRange(selectionIndex.getStart(), selectionIndex.getEnd() - (input.length() - textAreaInput.getText().length()));
     }
 
     @FXML
     private void buttonOpen(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
+        if (file != null) {
+            fileChooser.setInitialDirectory(file.getParentFile());
+        }
         file = fileChooser.showOpenDialog(null);
-        if(file.isFile() && file.canRead()){
-            textAreaInput = 
+        if (file != null && file.isFile() && file.canRead()) {
+            try (Scanner fileReader = new Scanner(file)) {
+                textAreaInput.clear();
+                while (fileReader.hasNextLine()) {
+                    textAreaInput.appendText(fileReader.nextLine());
+                }
+            } catch (FileNotFoundException ex) {
+                //ex.printStackTrace();
+                System.out.println("Error in open");
+            }
         }
     }
 
@@ -59,7 +122,47 @@ public class FXMLSearchAndReplaceController implements Initializable {
     private void buttonSaveAs(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        fileChooser.showOpenDialog(null);
+        if (file != null) {
+            fileChooser.setInitialDirectory(file.getParentFile());
+        }
+        file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            try (FileWriter fw = new FileWriter(file, false)) {
+                System.out.println("Saving as");
+                fw.write(textAreaInput.getText());
+            } catch (IOException ex) {
+                //ex.printStackTrace();
+                System.out.println("Error in save as");
+            }
+        }
     }
 
+    @FXML
+    private void buttonSave(ActionEvent event) {
+        if (file == null) {
+            buttonSaveAs(event);
+        } else {
+            try (FileWriter fw = new FileWriter(file, false)) {
+                System.out.println("Saving");
+                System.out.println(textAreaInput.getText());
+                fw.write(textAreaInput.getText());
+            } catch (IOException ex) {
+                //ex.printStackTrace();
+                System.out.println("Error in save");
+            }
+        }
+    }
+
+    @FXML
+    private void buttonExit(ActionEvent event) {
+        System.exit(0);
+    }
+
+    @FXML
+    private void buttonSwap(ActionEvent event) {
+        toBeReplaced = textFieldSearch.getText();
+        replacement = textFieldReplace.getText();
+        textFieldSearch.setText(replacement);
+        textFieldReplace.setText(toBeReplaced);
+    }
 }
