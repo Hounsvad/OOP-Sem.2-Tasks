@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package Console;
+package console;
 
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;
