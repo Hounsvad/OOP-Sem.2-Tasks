@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -34,7 +35,9 @@ public class OutputController implements Initializable {
 
     @FXML
     private void pressClose(ActionEvent event) {
-        System.exit(0);
+        Stage stage = (Stage) textDisplay.getParent().getScene().getWindow();
+        stage.close();
+        
     }
 
     @FXML

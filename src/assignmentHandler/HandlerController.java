@@ -51,8 +51,11 @@ public class HandlerController implements Initializable {
     }
 
     @FXML
-    private void assignmentClicked(MouseEvent event) {
+    private void assignmentClicked(MouseEvent event) throws IOException, ClassNotFoundException, ClassNotFoundException, NoSuchMethodException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InvocationTargetException {
         assignmentDetail.setText(assignmentView.getSelectionModel().getSelectedItem().getDiscription());
+        if(event.getClickCount() >= 2 && event.getButton().equals(event.getButton().PRIMARY)){
+            assignmentLaunch(new ActionEvent());
+        }
     }
 
     @FXML
@@ -87,6 +90,7 @@ public class HandlerController implements Initializable {
             Method meth = cls.getMethod("main", String[].class);
             String[] params = null;
             meth.invoke(cls, (Object) params);
+            System.setOut(System.out);
         }
     }
 }

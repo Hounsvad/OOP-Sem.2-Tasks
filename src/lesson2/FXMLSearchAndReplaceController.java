@@ -19,6 +19,7 @@ import javafx.scene.control.IndexRange;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -150,7 +151,8 @@ public class FXMLSearchAndReplaceController implements Initializable {
 
     @FXML
     private void buttonExit(ActionEvent event) {
-        System.exit(0);
+        Stage stage = (Stage) input.getParent().getScene().getWindow();
+        stage.close();
     }
 
     @FXML
