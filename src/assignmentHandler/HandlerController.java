@@ -5,7 +5,6 @@ package assignmentHandler;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -26,7 +25,7 @@ import javafx.stage.Stage;
  *
  * @author Pinnacle F
  */
-public class FXMLDocumentController implements Initializable {
+public class HandlerController implements Initializable {
 
     private Label label;
     @FXML
@@ -71,6 +70,19 @@ public class FXMLDocumentController implements Initializable {
 
             }
         } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Output.fxml"));
+                Parent root1 = (Parent) loader.load();
+                Stage stage = new Stage();
+                stage.setTitle(assignmentView.getSelectionModel().getSelectedItem().getTitle());
+                stage.setScene(new Scene(root1));
+                stage.show();
+                //OutputController controller = loader.getController();
+                
+                
+            } catch (IOException e) {
+
+            }
             Class<?> cls = Class.forName(current.getPath());
             Method meth = cls.getMethod("main", String[].class);
             String[] params = null;

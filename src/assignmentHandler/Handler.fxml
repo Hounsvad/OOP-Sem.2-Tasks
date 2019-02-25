@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignmentHandler.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignmentHandler.HandlerController">
    <children>
       <ListView fx:id="assignmentView" layoutX="14.0" layoutY="48.0" onMouseClicked="#assignmentClicked" prefHeight="341.0" prefWidth="215.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="50.0" />
       <TextArea fx:id="assignmentDetail" layoutX="240.0" layoutY="47.0" prefWidth="347.0" AnchorPane.bottomAnchor="45.0" AnchorPane.topAnchor="50.0" />
