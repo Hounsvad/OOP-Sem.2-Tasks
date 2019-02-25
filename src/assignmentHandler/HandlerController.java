@@ -3,12 +3,16 @@
  */
 package assignmentHandler;
 
+import Console.CliWrap;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,20 +44,23 @@ public class HandlerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        assignmentView.getItems().add(new Assignment("Lesson1", "The first lesson", "src\\Lesson1\\FXML.fxml", true));
-        assignmentView.getItems().add(new Assignment("Lesson2 Prep: CamelWriter", "A console application, that convertes text to camelcase", "lesson2Prep.camelWriter.CamelWriter", false));
-        assignmentView.getItems().add(new Assignment("Lesson2 Prep: DanishIslands", "A console application, that lists danish islands", "lesson2Prep.danishIsles.DanishIslandFileReader", false));
-        assignmentView.getItems().add(new Assignment("Lesson2", "Search and replace", "src\\lesson2\\FXMLSearchAndReplace.fxml", true));
-        assignmentView.getItems().add(new Assignment("Lesson3 Prep: Person", "An exorcise in comparable", "lesson3Prep.comparable_exercise.Person", false));
-        assignmentView.getItems().add(new Assignment("Lesson3 Prep: TextAnalyzer", "An exorcise in comparable", "lesson3Prep.exercise_text_analyser.TextAnalyzer", false));
-        assignmentView.getItems().add(new Assignment("Lesson3", "An exorcise in comparable", "lesson3.Mountain", false));
-        
+        try {
+            assignmentView.getItems().add(new Assignment("Lesson1", "The first lesson", "/lesson1/FXML.fxml", true));
+            assignmentView.getItems().add(new Assignment("Lesson2 Prep: CamelWriter", "A console application, that convertes text to camelcase", "lesson2Prep.camelWriter.CamelWriter", false));
+            assignmentView.getItems().add(new Assignment("Lesson2 Prep: DanishIslands", "A console application, that lists danish islands", "lesson2Prep.danishIsles.DanishIslandFileReader", false));
+            assignmentView.getItems().add(new Assignment("Lesson2", "Search and replace", "/lesson2/FXMLSearchAndReplace.fxml", true));
+            assignmentView.getItems().add(new Assignment("Lesson3 Prep: Person", "An exorcise in comparable", "lesson3Prep.comparable_exercise.Person", false));
+            assignmentView.getItems().add(new Assignment("Lesson3 Prep: TextAnalyzer", "An exorcise in comparable", "lesson3Prep.exercise_text_analyser.TextAnalyzer", false));
+            assignmentView.getItems().add(new Assignment("Lesson3", "An exorcise in comparable", "lesson3.Mountain", false));
+        } catch (URISyntaxException ex) {
+            System.out.println("Error");
+        }
     }
 
     @FXML
     private void assignmentClicked(MouseEvent event) throws IOException, ClassNotFoundException, ClassNotFoundException, NoSuchMethodException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InvocationTargetException {
         assignmentDetail.setText(assignmentView.getSelectionModel().getSelectedItem().getDiscription());
-        if(event.getClickCount() >= 2 && event.getButton().equals(event.getButton().PRIMARY)){
+        if (event.getClickCount() >= 2 && event.getButton().equals(event.getButton().PRIMARY)) {
             assignmentLaunch(new ActionEvent());
         }
     }
@@ -73,24 +80,7 @@ public class HandlerController implements Initializable {
 
             }
         } else {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("Output.fxml"));
-                Parent root1 = (Parent) loader.load();
-                Stage stage = new Stage();
-                stage.setTitle(assignmentView.getSelectionModel().getSelectedItem().getTitle());
-                stage.setScene(new Scene(root1));
-                stage.show();
-                //OutputController controller = loader.getController();
-                
-                
-            } catch (IOException e) {
-
-            }
-            Class<?> cls = Class.forName(current.getPath());
-            Method meth = cls.getMethod("main", String[].class);
-            String[] params = null;
-            meth.invoke(cls, (Object) params);
-            System.setOut(System.out);
+            CliWrap wrapper = new CliWrap(current.getPath(), current.getTitle());
         }
     }
 }

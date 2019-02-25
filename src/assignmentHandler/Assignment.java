@@ -3,8 +3,7 @@
  */
 package assignmentHandler;
 
-import java.io.File;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
@@ -15,21 +14,17 @@ public class Assignment {
     String title;
     String discription;
     URL url;
-    File file;
+
     boolean isGUI;
     String path;
-    public Assignment(String title, String discription, String path, boolean isGUI) {
-        try {
-            this.title = title;
-            this.discription = discription;
-            this.path = path;
-            this.file = new File(path);
-            this.url = file.toURL();
-            this.isGUI = isGUI;
-            System.out.println("construct finished");
-        } catch (MalformedURLException ex) {
-            System.out.println("Error");
-        }
+    public Assignment(String title, String discription, String path, boolean isGUI) throws URISyntaxException {
+        this.title = title;
+        this.discription = discription;
+        this.path = path;
+        this.url = Main.class.getResource(path);
+        System.out.println(Main.class.getResource(path));
+        this.isGUI = isGUI;
+        System.out.println("Construction of " + title + " finished");
     }
 
     public String getTitle() {
@@ -44,22 +39,13 @@ public class Assignment {
         return url;
     }
 
-    public File getFxml() {
-        return file;
-    }
-
     public boolean isIsGUI() {
         return isGUI;
-    }
-
-    public File getFile() {
-        return file;
     }
 
     public String getPath() {
         return path;
     }
-    
     
     @Override
     public String toString() {
