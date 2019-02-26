@@ -30,7 +30,7 @@ public class CliWrap extends ConsoleApplication {
         }
         primaryStage.setTitle(title);
         primaryStage.setScene(scene);
-        primaryStage.setOnCloseRequest(e -> System.exit(0));
+        primaryStage.setOnCloseRequest(e -> primaryStage.close());
         primaryStage.show();
 
         System.setOut(console.getOut());
