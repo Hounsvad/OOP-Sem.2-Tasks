@@ -32,22 +32,6 @@ public class Lesson1 extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-//        CipherInterface cipher;
-
-//        String message = "Her har vi en Meddelelse, som er hemmelig!";
-//        System.out.println("Original: \n" + message);
-//
-//        // Fjern ud-kommenteringen, når AtbashCipher skal testes
-//        cipher = new AtbashCipher();
-//        String enc = cipher.encrypt(message);
-//        System.out.println("Atbash: \n" + enc);
-//        System.out.println(cipher.decrypt(enc));
-//
-//        // Fjern ud-kommenteringen, når CeasarCipher skal testes
-//        cipher = new CeasarCipher(13);
-//        enc = cipher.encrypt(message);
-//        System.out.println("Ceasar 13: \n" + enc);
-//        System.out.println(cipher.decrypt(enc));
     }
 
 }

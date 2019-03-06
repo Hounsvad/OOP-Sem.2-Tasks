@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="349.0" prefWidth="600.0" snapToPixel="false" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lesson1.FXMLController">
+<AnchorPane id="AnchorPane" prefHeight="349.0" prefWidth="600.0" snapToPixel="false" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lesson1.FXMLController">
     <children>
         <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -87,7 +87,7 @@
                            </children>
                         </Group>
                         <Button layoutX="194.0" layoutY="38.0" mnemonicParsing="false" onAction="#getShapeInfo" text="Get info" />
-                        <TextArea fx:id="textArea_ShapeOutput" editable="false" layoutX="300.0" layoutY="8.0" prefHeight="300.0" prefWidth="302.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <TextArea fx:id="textAreaShapeOutput" editable="false" layoutX="300.0" layoutY="8.0" prefHeight="300.0" prefWidth="302.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children></AnchorPane>
                     </content>
                 </Tab>

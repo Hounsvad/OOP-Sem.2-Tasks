@@ -35,54 +35,54 @@ import javafx.scene.input.MouseEvent;
 public class FXMLController implements Initializable {
 
     @FXML
-    private RadioButton radioButton_Atbash;
+    private RadioButton radioButtonAtbash;
     @FXML
-    private ToggleGroup toggleGroup_Cipher;
+    private ToggleGroup toggleGroupCipher;
     @FXML
-    private RadioButton radioButton_Caesar;
+    private RadioButton radioButtonCaesar;
     @FXML
-    private TextArea textArea_Output;
+    private TextArea textAreaOutput;
     @FXML
-    private TextArea textArea_Input;
+    private TextArea textAreaInput;
     @FXML
-    private Spinner<Integer> spinner_RotCount;
+    private Spinner<Integer> spinnerRotCount;
     @FXML
-    private Button button_Save;
+    private Button buttonSave;
     @FXML
-    private Button button_Decode;
+    private Button buttonDecode;
     @FXML
-    private Button button_Encode;
+    private Button buttonEncode;
     @FXML
-    private RadioButton radioButton_Ellipse;
+    private RadioButton radioButtonEllipse;
     @FXML
-    private ToggleGroup toggleGroup_Shape;
+    private ToggleGroup toggleGroupShape;
     @FXML
-    private RadioButton radioButton_Rectangle;
+    private RadioButton radioButtonRectangle;
     @FXML
-    private RadioButton radioButton_Circle;
+    private RadioButton radioButtonCircle;
     @FXML
-    private RadioButton radioButton_Square;
+    private RadioButton radioButtonSquare;
     @FXML
-    private TextField textField_SecondParam;
+    private TextField textFieldSecondParam;
     @FXML
-    private Label label_SecondInput;
+    private Label labelSecondInput;
     @FXML
-    private TextField textField_FirstParam;
+    private TextField textFieldFirstParam;
     @FXML
-    private Label label_FirstInput;
+    private Label labelFirstInputd;
     @FXML
-    private TextArea textArea_ShapeOutput;
+    private TextArea textAreaShapeOutput;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        spinner_RotCount.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, CipherInterface.ALPHABETH.length - 1, 1));
-        radioButton_Ellipse.setUserData(ShapeFacade.SHAPES.ELLIPSE);
-        radioButton_Rectangle.setUserData(ShapeFacade.SHAPES.RECTANGLE);
-        radioButton_Circle.setUserData(ShapeFacade.SHAPES.CIRCLE);
-        radioButton_Square.setUserData(ShapeFacade.SHAPES.SQUARE);
+        spinnerRotCount.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, CipherInterface.ALPHABETH.length - 1, 1));
+        radioButtonEllipse.setUserData(ShapeFacade.SHAPES.ELLIPSE);
+        radioButtonRectangle.setUserData(ShapeFacade.SHAPES.RECTANGLE);
+        radioButtonCircle.setUserData(ShapeFacade.SHAPES.CIRCLE);
+        radioButtonSquare.setUserData(ShapeFacade.SHAPES.SQUARE);
 
     }
 
@@ -91,9 +91,9 @@ public class FXMLController implements Initializable {
         File f = new File("Output.txt");
         try (PrintWriter pw = new PrintWriter(f);) {
             pw.println("(&Input&)");
-            pw.println(textArea_Input.getText());
+            pw.println(textAreaInput.getText());
             pw.println("(&Output&)");
-            pw.println(textArea_Output.getText());
+            pw.println(textAreaOutput.getText());
             pw.close();
         } catch (FileNotFoundException e) {
 
@@ -102,42 +102,42 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void updateEncoder(MouseEvent event) {
-        if (toggleGroup_Cipher.getSelectedToggle() == radioButton_Atbash) {
-            button_Encode.setText("Transcode");
-            button_Decode.disableProperty().set(true);
-            spinner_RotCount.disableProperty().set(true);
+        if (toggleGroupCipher.getSelectedToggle() == radioButtonAtbash) {
+            buttonEncode.setText("Transcode");
+            buttonDecode.disableProperty().set(true);
+            spinnerRotCount.disableProperty().set(true);
         } else {
-            button_Encode.setText("Encode");
-            button_Decode.disableProperty().set(false);
-            spinner_RotCount.disableProperty().set(false);
+            buttonEncode.setText("Encode");
+            buttonDecode.disableProperty().set(false);
+            spinnerRotCount.disableProperty().set(false);
         }
     }
 
     @FXML
     private void encode(ActionEvent event) {
         CipherInterface cipher;
-        cipher = toggleGroup_Cipher.getSelectedToggle() == radioButton_Atbash ? new AtbashCipher() : new CeasarCipher(spinner_RotCount.getValue());
-        textArea_Output.setText(cipher.encrypt(textArea_Input.getText()));
+        cipher = toggleGroupCipher.getSelectedToggle() == radioButtonAtbash ? new AtbashCipher() : new CeasarCipher(spinnerRotCount.getValue());
+        textAreaOutput.setText(cipher.encrypt(textAreaInput.getText()));
     }
 
     @FXML
     private void decode(ActionEvent event) {
         CipherInterface cipher;
-        cipher = toggleGroup_Cipher.getSelectedToggle() == radioButton_Atbash ? new AtbashCipher() : new CeasarCipher(spinner_RotCount.getValue());
-        textArea_Output.setText(cipher.decrypt(textArea_Input.getText()));
+        cipher = toggleGroupCipher.getSelectedToggle() == radioButtonAtbash ? new AtbashCipher() : new CeasarCipher(spinnerRotCount.getValue());
+        textAreaOutput.setText(cipher.decrypt(textAreaInput.getText()));
     }
 
     @FXML
     private void getShapeInfo(ActionEvent event) {
-        ShapeFacade.SHAPES shape = (ShapeFacade.SHAPES) toggleGroup_Shape.getSelectedToggle().getUserData();
+        ShapeFacade.SHAPES shape = (ShapeFacade.SHAPES) toggleGroupShape.getSelectedToggle().getUserData();
         switch (shape) {
             case SQUARE:
             case CIRCLE:
-                textArea_ShapeOutput.setText(ShapeFacade.getInstance().getShapeInfo(shape, new double[]{Double.parseDouble(textField_FirstParam.getText())}));
+                textAreaShapeOutput.setText(ShapeFacade.getInstance().getShapeInfo(shape, new double[]{Double.parseDouble(textFieldFirstParam.getText())}));
                 break;
             case RECTANGLE:
             case ELLIPSE:
-                textArea_ShapeOutput.setText(ShapeFacade.getInstance().getShapeInfo(shape, new double[]{Double.parseDouble(textField_FirstParam.getText()), Double.parseDouble(textField_SecondParam.getText())}));
+                textAreaShapeOutput.setText(ShapeFacade.getInstance().getShapeInfo(shape, new double[]{Double.parseDouble(textFieldFirstParam.getText()), Double.parseDouble(textFieldSecondParam.getText())}));
                 break;
             default:
                 throw new AssertionError();
@@ -146,17 +146,17 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void updateShape(ActionEvent event) {
-        ShapeFacade.SHAPES shape = (ShapeFacade.SHAPES) toggleGroup_Shape.getSelectedToggle().getUserData();
+        ShapeFacade.SHAPES shape = (ShapeFacade.SHAPES) toggleGroupShape.getSelectedToggle().getUserData();
         switch (shape) {
             case SQUARE:
             case CIRCLE:
-                label_SecondInput.disableProperty().set(true);
-                textField_SecondParam.disableProperty().set(true);
+                labelSecondInput.disableProperty().set(true);
+                textFieldSecondParam.disableProperty().set(true);
                 break;
             case RECTANGLE:
             case ELLIPSE:
-                label_SecondInput.disableProperty().set(false);
-                textField_SecondParam.disableProperty().set(false);
+                labelSecondInput.disableProperty().set(false);
+                textFieldSecondParam.disableProperty().set(false);
                 break;
             default:
                 throw new AssertionError();
