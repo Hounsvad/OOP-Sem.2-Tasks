@@ -3,12 +3,16 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lesson4.Opg4Controller">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lesson4.Opg4Controller">
   <tabs>
     <Tab text="Nummerplader">
       <content>
@@ -26,7 +30,21 @@
     </Tab>
     <Tab text="Spillekort">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextArea fx:id="cardOutput" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="704.0" prefWidth="1172.0" promptText="Kloer Es, Ruder Es, Hjerter Es, Spar Es," AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+                     <font>
+                        <Font name="Consolas" size="32.0" />
+                     </font></TextArea>
+                  <Button layoutX="14.0" layoutY="718.0" mnemonicParsing="false" onAction="#shuffle" text="Bland" AnchorPane.bottomAnchor="14.0" AnchorPane.topAnchor="732.0" />
+                  <RadioButton accessibleText="50" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="41.0" selected="true" text="50" AnchorPane.leftAnchor="1035.0" AnchorPane.topAnchor="736.0">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="shuffleCount" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton accessibleText="100" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="41.0" text="100" toggleGroup="$shuffleCount" AnchorPane.leftAnchor="1090.0" AnchorPane.topAnchor="736.0" />
+                  <RadioButton accessibleText="250" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="41.0" text="250" toggleGroup="$shuffleCount" AnchorPane.leftAnchor="1145.0" AnchorPane.topAnchor="736.0" />
+               </children></AnchorPane>
       </content>
     </Tab>
   </tabs>
