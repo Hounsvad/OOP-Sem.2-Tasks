@@ -1,9 +1,16 @@
 package lesson4.opg2_numberplates;
 
+import assignmentHandler.Main;
+import java.io.File;
+import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * VOP eksamen F2014 
+ * VOP eksamen F2014
  * Kodeskelet til opgave 2
  *
  * @author erso
@@ -11,10 +18,10 @@ import java.util.Map;
 public class NumberPlates {
 
     public static final int LENGTH = 7;         // Noejagtig laengde paa nummerplade
-    
+
     private Map<String, String> districtMap;    // Kendingsbogstaver -> Politikreds
-    
-    private VehicleType[] vehicleTypes = {      // Intervaller for anvendelse
+
+    private VehicleType[] vehicleTypes = { // Intervaller for anvendelse
         new VehicleType("Motorcykel", 10000, 19999),
         new VehicleType("Privat personvogn", 20000, 45999),
         new VehicleType("Udlejningsvogn", 46000, 46999),
@@ -26,37 +33,46 @@ public class NumberPlates {
 
     public NumberPlates() {
         // opg 2a) initialiser districtMap
+        districtMap = new TreeMap<>();
+        readFile();
 
     }
 
     public void readFile() {
         // opg 2a) Indlaes filen og put i mappen
+        Scanner sc = new Scanner(Main.class.getResourceAsStream("/lesson4/Nummerplader.txt")).useDelimiter("/r/n");
+        while (sc.hasNextLine()) {
+            String[] tokens = sc.nextLine().split(":");
+            districtMap.put(tokens[0], tokens[1]);
+        }
+        sc.close(); //just for good measure
     }
 
     public String validate(String plate) {
         // Opg 2b) Tjek nummerpladen og returner anvendelse og politidistrikt
-        return null;
+        if (plate.length() != 7) {
+            return "Invalid nummerplade";
+        }
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(validateVehicleType(Integer.parseInt(plate.substring(2)))).append(" fra ");
+        sb.append(validateDistrict(plate.substring(0, 2)));
+        return sb.toString();
     }
 
     private String validateDistrict(String districtCode) {
         // Opg 2b) Tjek kendingsbogstaver og returner politidistrikt
-        return null;
+        String stringReturn = districtMap.get(districtCode);
+        return stringReturn == null ? "Kreds findes ikke: " + districtCode : stringReturn;
     }
 
     private String validateVehicleType(int number) {
         // Opg 2b) Tjek hvilket interval number ligger i og returner anvendelse
-        return null;
+        for (VehicleType v : vehicleTypes) {
+            if (v.isA(number)) {
+                return v.getVehicleType();
+            }
+        }
+        return "Illegalt nummer: " + number;
     }
-
-    public static void main(String[] arg) {
-        // Opg 2) Kan benyttes til test af opgave 2a og 2b
-        NumberPlates pd = new NumberPlates();
-
-        System.out.println("KC39078: " + pd.validate("KC39078"));
-        System.out.println("kc49900: " + pd.validate("kc49900"));
-        System.out.println("KO47078: " + pd.validate("KO47078"));
-        System.out.println("EN19022: " + pd.validate("EN19022"));
-        System.out.println("EN190220: " + pd.validate("EN190220"));
-    }
-
 }

@@ -48,6 +48,7 @@ public class HandlerController implements Initializable {
             assignmentView.getItems().add(new Assignment("Lesson3 Prep: Person", "An exorcise in comparable", "lesson3Prep.comparable_exercise.Person", false));
             assignmentView.getItems().add(new Assignment("Lesson3 Prep: TextAnalyzer", "An exorcise in comparable", "lesson3Prep.exercise_text_analyser.TextAnalyzer", false));
             assignmentView.getItems().add(new Assignment("Lesson3", "An exorcise in comparable", "lesson3.Mountain", false));
+            assignmentView.getItems().add(new Assignment("Lesson4", "lesson4", "/lesson4/Opg4.fxml", true));
         } catch (URISyntaxException ex) {
             System.out.println("Error");
         }

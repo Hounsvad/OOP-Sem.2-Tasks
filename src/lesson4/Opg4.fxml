@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lesson4.Opg4Controller">
+  <tabs>
+    <Tab text="Nummerplader">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="inputLicenceplate" layoutX="91.0" layoutY="60.0" onKeyReleased="#enterLicenceplate" />
+                  <Button layoutX="14.0" layoutY="60.0" mnemonicParsing="false" onAction="#pressLicenceplate" text="Tjek" />
+                  <Label fx:id="labelLicenceplate" layoutX="14.0" layoutY="105.0" prefHeight="29.0" prefWidth="226.0">
+                     <padding>
+                        <Insets top="30.0" />
+                     </padding>
+                  </Label>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Spillekort">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>
