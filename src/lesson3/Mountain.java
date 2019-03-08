@@ -9,12 +9,12 @@ import java.util.Arrays;
  */
 public class Mountain implements Comparable<Mountain> {
 
-    String name;
-    String height;
-    String prominence;
-    String lattitude;
-    String longtitude;
-    String range;
+    private final String name;
+    private final String height;
+    private final String prominence;
+    private final String lattitude;
+    private final String longtitude;
+    private final String range;
 
     public Mountain(String name, String height, String prominence, String lattitude, String longtitude, String range) {
         this.name = name;
@@ -24,7 +24,6 @@ public class Mountain implements Comparable<Mountain> {
         this.longtitude = longtitude;
         this.range = range;
     }
-    //Mont Ventoux h=1909, pro=1148, lat=44°10'26", lon=05°16'42", ran=Alps    
     @Override
     public String toString() {
         return String.format("Mont %s h=%s, pro=%s, lat=%s, lon=%s, ran=%s%n",name,height,prominence,lattitude,longtitude,range);
@@ -34,6 +33,15 @@ public class Mountain implements Comparable<Mountain> {
     public int compareTo(Mountain o) {
         return  prominence.compareTo(o.prominence) == 0 ? height.compareTo(o.height) : prominence.compareTo(o.prominence);
     }
+
+    public String getRange() {
+        return range;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
     
 
     /**
