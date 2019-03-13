@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -17,9 +18,9 @@ import javafx.stage.Stage;
  * @author Pinnacle F
  */
 public class CliWrap extends ConsoleApplication {
-
-    Stage primaryStage = new Stage();
-
+    
+    public Stage primaryStage = new Stage();
+    
     public CliWrap(String path, String title) {
         //final String[] args = getParameters().getRaw().toArray(new String[0]);
         final ConsoleView console = new ConsoleView();
@@ -32,7 +33,7 @@ public class CliWrap extends ConsoleApplication {
         primaryStage.setScene(scene);
         primaryStage.setOnCloseRequest(e -> primaryStage.close());
         primaryStage.show();
-
+        
         System.setOut(console.getOut());
         System.setIn(console.getIn());
         System.setErr(console.getOut());
@@ -52,17 +53,17 @@ public class CliWrap extends ConsoleApplication {
                     // ignore
                 }
             }
-            primaryStage.close();
+            Platform.runLater(() -> (primaryStage.close()));
         });
         thread.setName("Console Application Main Thread");
         thread.start();
     }
-
+    
     @Override
     public void invokeMain(String[] args) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     public void invokeMain(String[] args, String path) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, IllegalAccessException, IllegalArgumentException, IllegalArgumentException, InvocationTargetException, InvocationTargetException, InvocationTargetException, InvocationTargetException {
         Class<?> cls = Class.forName(path);
         Method meth = cls.getMethod("main", String[].class);

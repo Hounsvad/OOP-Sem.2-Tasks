@@ -37,7 +37,7 @@ public class FXMLSearchAndReplaceController implements Initializable {
 
     private File file = null;
 
-    private IndexRange selection = null;
+    private IndexRange selection;
 
     private String varSearch;
 

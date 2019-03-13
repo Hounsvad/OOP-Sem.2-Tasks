@@ -29,7 +29,7 @@ import java.net.URL;
 public abstract class ConsoleApplication extends Application {
 
   public boolean pauseBeforeExit = true;
-  private Stage stage;
+  public Stage stage;
 
   @Override
   public final void start(final Stage primaryStage) throws Exception {
