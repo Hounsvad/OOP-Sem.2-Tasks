@@ -11,7 +11,7 @@ import lesson5.thread_excercise.requesthandlers.AbstractRequestHandler;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import lesson5.thread_excercise.requesthandlers.FlipRequestHandler;
+import lesson5.thread_excercise.requesthandlers.*;
 
 /**
  *
@@ -39,8 +39,8 @@ public class TCPServer {
                 System.out.println("Server has accepted a client on port " + socket.getPort());
 
 //Choose RequestHandler before start:
-                requestHandler =  new FlipRequestHandler(socket);
-//                requestHandler =  new FileOutRequestHandler(socket, "RequestLog.txt");
+                //requestHandler =  new FlipRequestHandler(socket);
+                requestHandler =  new FileOutRequestHandler(socket, "RequestLog.txt");
 //                requestHandler = new ObjectRequestHandler(socket);
                 
                 new Thread(requestHandler).start();
