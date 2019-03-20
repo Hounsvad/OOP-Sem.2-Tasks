@@ -88,6 +88,7 @@ public class FileOutRequestHandler extends AbstractRequestHandler
             System.exit(0);
         } finally
         {
+            try{
             if (is != null)
             {
                 is.close();
@@ -105,6 +106,9 @@ public class FileOutRequestHandler extends AbstractRequestHandler
                         }
                     }
                 }
+            }
+            }catch(Exception e){
+                System.out.println(e);
             }
         }
     }
