@@ -7,8 +7,12 @@ package lesson6;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -31,9 +35,12 @@ public class FXMLController implements Initializable {
     private ImageView slot3;
     private boolean running = false;
     private final Image[] images = new Image[10];
-    private final ImageView[] uiSlots = new ImageView[]{slot1, slot2, slot3};
-    private final Spinner[] slots = new Spinner[3];
+    private ImageView[] uiSlots;
+    private final Thread[] slots = new Thread[3];
     private int upCount = 0;
+    private boolean[] shouldKeepRunning = new boolean[3];
+    @FXML
+    private Label youWin;
 
     /**
      * Initializes the controller class.
@@ -41,34 +48,53 @@ public class FXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         for (int i = 0; i < 10; i++) {
-            images[i] = new Image(getClass().getResourceAsStream("/recsources/fruits" + i + ".png"));
+            images[i] = new Image(getClass().getResourceAsStream("resources/fruits" + i + ".png"));
         }
-        for (int i = 0; i < slots.length; i++) {
-            //slot.setImage(images[(int) (Math.random() * 9)]);
-            slots[i] = new Spinner(uiSlots[i], (int) (Math.random() * 9), 100 + (i * 10));
-            slots[i].start();
-       }
+        uiSlots = new ImageView[]{slot1, slot2, slot3};
     }
 
     @FXML
-    private void slot1Clicked(MouseEvent event) {
+    private void slotClicked(MouseEvent event) {
+        try {
+            for (int i = 0; i < uiSlots.length; i++) {
+                if (((ImageView) event.getSource()).equals(uiSlots[i])) {
+                    ShouldNotRunning(i);
+                    slots[i].join();
+                    hasEnded();
+                }
+            }
+        } catch (InterruptedException ex) {
+            System.out.println(ex);
+        }
     }
 
-    @FXML
-    private void slot2Clicked(MouseEvent event) {
+    private void hasEnded() {
+        if (getUpCount() == 0) {
+            this.running = false;
+            checkWinStatus();
+        }
     }
 
-    @FXML
-    private void slot3Clicked(MouseEvent event) {
+    private void checkWinStatus() {
+        if (uiSlots[0].getImage() == uiSlots[1].getImage()
+                && uiSlots[0].getImage() == uiSlots[2].getImage()) {
+            youWin.setVisible(true);
+        }
     }
 
     @FXML
     private void handleClicked(MouseEvent event) {
         if (!this.running) {
             this.running = true;
-
+            for (int i = 0; i < slots.length; i++) {
+                slots[i] = new Thread(new Spinner(i, (int) (Math.random() * 9), 100 + (i * 20)));
+                slots[i].setDaemon(true);
+                shouldKeepRunning[i] = true;
+                slots[i].start();
+            }
+        } else {
+            youWin.setVisible(false);
         }
-
     }
 
     public synchronized void updateThreadCount(boolean up) {
@@ -84,14 +110,24 @@ public class FXMLController implements Initializable {
         return upCount;
     }
 
-    private class Spinner extends Thread {
+    public synchronized boolean getShouldKeepRunning(int index) {
+        return shouldKeepRunning[index];
+    }
+
+    public synchronized void ShouldNotRunning(int index) {
+        shouldKeepRunning[index] = false;
+    }
+
+    private class Spinner implements Runnable {
 
         ImageView image;
         int initialImage;
         long delay;
+        int slot;
 
-        public Spinner(ImageView slot, int initialImage, long delay) {
-            this.image = slot;
+        public Spinner(int slot, int initialImage, long delay) {
+            this.slot = slot;
+            this.image = uiSlots[slot];
             this.initialImage = initialImage;
             this.delay = delay;
         }
@@ -100,15 +136,26 @@ public class FXMLController implements Initializable {
         public void run() {
             int i = initialImage;
             try {
+                updateThreadCount(true);
                 while (true) {
-                    image.setImage(images[i % 10]);
+                    if (!getShouldKeepRunning(slot)) {
+                        break;
+                    }
+                    final Integer suckADick = i % 10;
+                    if (images[suckADick] == null) {
+                        System.out.println("Suck a dick");
+                        System.exit(-1);
+                    }
+                    Platform.runLater(() -> image.setImage(images[suckADick]));
                     Thread.sleep(delay);
                     i++;
                 }
             } catch (InterruptedException e) {
                 System.out.println(e);
+            } finally {
+                updateThreadCount(false);
             }
-        }
 
+        }
     }
 }

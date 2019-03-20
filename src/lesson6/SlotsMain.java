@@ -5,7 +5,6 @@
  */
 package lesson6.resources;
 
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,16 +16,15 @@ import javafx.stage.Stage;
  * @author Hounsvad
  */
 public class SlotsMain extends Application {
-    
+
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML.fxml"));
-        Parent root = loader.load();
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
         
         Scene scene = new Scene(root);
         
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
@@ -35,5 +33,5 @@ public class SlotsMain extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
