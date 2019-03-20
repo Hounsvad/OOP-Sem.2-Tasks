@@ -50,7 +50,7 @@ public class HandlerController implements Initializable {
             assignmentView.getItems().add(new Assignment("Lesson3", "An exorcise in comparable", "lesson3.MountainSet", false));
             assignmentView.getItems().add(new Assignment("Lesson4", "En fane med en nummerplade analyser\nEn fane med en kortspils generator og blander", "/lesson4/Opg4.fxml", true));
             assignmentView.getItems().add(new Assignment("Lesson5", "ObjectOutputStream append error", "lesson5.serial_io.savitch_10_10_append_error.WriteSpeciesFileAppend", false));
-            assignmentView.getItems().add(new Assignment("Lesson5", "ObjectOutputStream append error", "lesson5.serial_io.savitch_10_10_append_error.WriteSpeciesFileAppend", false));
+            assignmentView.getItems().add(new Assignment("Lesson6", "All the streams", "/lesson6/FXML.fxml", true));
         } catch (URISyntaxException ex) {
             System.out.println("Error");
         }
