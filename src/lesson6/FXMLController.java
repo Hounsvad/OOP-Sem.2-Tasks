@@ -41,7 +41,7 @@ public class FXMLController implements Initializable {
             images[i] = new Image(getClass().getResourceAsStream("/recsources/fruits"+i+".png"));
         }
         for (ImageView slot : slots){
-            slot.setImage([Math.random()*10]);
+            slot.setImage(images[(int)Math.random()*10]);
         }
     }
 
